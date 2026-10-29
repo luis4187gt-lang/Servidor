@@ -1,7 +1,8 @@
 
 // BACKEND - tiktok-live-connector - server.js
 // Instala: npm init -y && npm install tiktok-live-connector socket.io express cors
-import { WebcastPushConnection } from 'tiktok-live-connector';
+import pkg from 'tiktok-live-connector';
+const { WebcastPushConnection } = pkg;
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
