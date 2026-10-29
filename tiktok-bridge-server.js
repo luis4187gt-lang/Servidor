@@ -12,7 +12,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.get('/', (req,res) => res.send('Centroteo TikTok Bridge Activo'));
 
