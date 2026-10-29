@@ -1,0 +1,15 @@
+{
+  "name": "centroteo-tiktok-bridge",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "tiktok-bridge-server.js",
+  "scripts": {
+    "start": "node tiktok-bridge-server.js"
+  },
+  "dependencies": {
+    "tiktok-live-connector": "^1.2.5",
+    "socket.io": "^4.7.2",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
