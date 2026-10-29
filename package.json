@@ -1,7 +1,6 @@
 {
   "name": "centroteo-tiktok-bridge",
   "version": "1.0.0",
-  "type": "module",
   "main": "tiktok-bridge-server.js",
   "engines": {
     "node": "20.x"
