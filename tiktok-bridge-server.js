@@ -1,12 +1,9 @@
-
-// BACKEND - tiktok-live-connector - server.js
-// Instala: npm init -y && npm install tiktok-live-connector socket.io express cors
-import pkg from 'tiktok-live-connector';
-const { WebcastPushConnection } = pkg;
-import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
-import cors from 'cors';
+// BACKEND - tiktok-live-connector - server.js (CommonJS - Render compatible)
+const { WebcastPushConnection } = require('tiktok-live-connector');
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
@@ -29,7 +26,6 @@ async function conectarTikTok(username) {
         io.emit('tiktok_connected', { username });
     }).catch(err => console.error('Error conectando', err));
 
-    // Cuando alguien se une
     tiktokConnection.on('member', data => {
         console.log(`${data.uniqueId} se unio`);
         io.emit('user_joined', {
@@ -40,21 +36,19 @@ async function conectarTikTok(username) {
         });
     });
 
-    // Cuando mandan regalo
     tiktokConnection.on('gift', data => {
-        if(data.giftType === 1 && !data.repeatEnd) return; // solo final de streak
+        if(data.giftType === 1 && !data.repeatEnd) return;
         console.log(`${data.uniqueId} mando ${data.giftName}`);
         io.emit('gift', {
             username: data.uniqueId,
             photo: data.profilePictureUrl,
             giftName: data.giftName,
-            giftType: data.giftId, // para saber si es rosa, leon, etc
+            giftType: data.giftId,
             diamondCount: data.diamondCount,
             repeatCount: data.repeatCount
         });
     });
 
-    // Cuando alguien se va no hay evento oficial, lo simulamos con desconexion
     tiktokConnection.on('chat', data => {
         io.emit('chat', { username: data.uniqueId, comment: data.comment });
     });
@@ -65,4 +59,4 @@ app.get('/connect/:username', (req,res) => {
     res.json({ status: 'conectando', username: req.params.username });
 });
 
-server.listen(PORT, () => console.log(`Bridge en http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Bridge en puerto ${PORT}`));
